@@ -23,9 +23,15 @@ namespace ResturantWebApp.Pages.Categories
 
         public async Task<IActionResult> OnPost()
         {
-            await _dbContext.Categories.AddAsync(Category);
-            await _dbContext.SaveChangesAsync();
-            return RedirectToPage("Index");
+            if (ModelState.IsValid)
+            {
+                await _dbContext.Categories.AddAsync(Category);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToPage("Index");
+            }
+
+            return Page();
+            
         }
     }
 }
