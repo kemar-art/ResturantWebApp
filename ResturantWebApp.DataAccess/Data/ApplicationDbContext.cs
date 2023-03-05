@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ResturantWebApp.Model;
+using ResturantWebApp.Models;
 
-namespace ResturantWebApp.Data
+namespace ResturantWebApp.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

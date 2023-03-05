@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace ResturantWebApp.Migrations
+namespace ResturantWebApp.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateCategoryTable : Migration
+    public partial class NewMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

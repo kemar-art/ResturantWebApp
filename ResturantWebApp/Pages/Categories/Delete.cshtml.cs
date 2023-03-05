@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ResturantWebApp.Data;
-using ResturantWebApp.Model;
+using ResturantWebApp.DataAccess.Data;
+using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Categories
 {
@@ -30,8 +30,8 @@ namespace ResturantWebApp.Pages.Categories
                 { 
                     _dbContext.Remove(deleteCategory);
                     await _dbContext.SaveChangesAsync();
-                TempData["success"] = "Deleted successfully";
-                return RedirectToPage("Index");
+                    TempData["success"] = "Deleted successfully";
+                    return RedirectToPage("Index");
                 }
 
             return Page();
