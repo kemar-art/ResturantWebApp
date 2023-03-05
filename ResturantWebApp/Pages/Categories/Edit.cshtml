@@ -1,7 +1,8 @@
 ﻿@page
-@model ResturantWebApp.Pages.Categories.CreateModel
+@model ResturantWebApp.Pages.Categories.EditModel
 
 <form method="post">
+    <input hidden asp-for="Category.Id"/>
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary pl-3">Create Category</h2>
@@ -18,7 +19,7 @@
             <input asp-for="Category.DisplayOrder" class="form-control" />
             <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:150px;">Create</button>&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary" style="width:150px;">Update</button>&nbsp;&nbsp;
         <button asp-page="Index" class="btn btn-secondary" style="width:150px;">Back to List</button>
     </div>
 </form>

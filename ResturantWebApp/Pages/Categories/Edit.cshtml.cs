@@ -6,19 +6,20 @@ using ResturantWebApp.Model;
 namespace ResturantWebApp.Pages.Categories
 {
     [BindProperties]
-    public class CreateModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _dbContext;
 
         public Category Category { get; set; }
 
-        public CreateModel(ApplicationDbContext dbContext)
+        public EditModel(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
+            Category = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
         }
 
         public async Task<IActionResult> OnPost()
@@ -29,7 +30,7 @@ namespace ResturantWebApp.Pages.Categories
             }
             if (ModelState.IsValid)
             {
-                await _dbContext.Categories.AddAsync(Category);
+                 _dbContext.Categories.Update(Category);
                 await _dbContext.SaveChangesAsync();
                 return RedirectToPage("Index");
             }
