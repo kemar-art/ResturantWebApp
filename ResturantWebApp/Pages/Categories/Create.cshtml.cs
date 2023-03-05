@@ -31,6 +31,7 @@ namespace ResturantWebApp.Pages.Categories
             {
                 await _dbContext.Categories.AddAsync(Category);
                 await _dbContext.SaveChangesAsync();
+                TempData["success"] = "Created successfully";
                 return RedirectToPage("Index");
             }
 

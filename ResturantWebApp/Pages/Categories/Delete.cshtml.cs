@@ -30,7 +30,8 @@ namespace ResturantWebApp.Pages.Categories
                 { 
                     _dbContext.Remove(deleteCategory);
                     await _dbContext.SaveChangesAsync();
-                    return RedirectToPage("Index");
+                TempData["success"] = "Deleted successfully";
+                return RedirectToPage("Index");
                 }
 
             return Page();
