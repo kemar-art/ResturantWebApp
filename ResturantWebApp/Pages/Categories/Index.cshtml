@@ -8,7 +8,7 @@
         </div>
         <div class="col-6  text-end">
             <h2 class="text-primary">
-                <a asp-page="create" class="btn btn-primary">
+                <a asp-page="create" class="btn btn-success text-success-emphasis">
                     <i class="bi bi-plus-lg"></i></i>&nbsp;</i> Create New Category
                 </a>
             </h2>
@@ -34,7 +34,7 @@
                             <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-warning mx-2">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a asp-page="Delete" class="btn btn-danger mx-2">
+                            <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </div>
