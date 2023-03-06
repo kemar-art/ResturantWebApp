@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ResturantWebApp.DataAccess.Data;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Admin.FoodTypes
@@ -9,27 +10,27 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
     [BindProperties]
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
         public FoodType FoodType { get; set; }
 
-        public DeleteModel(ApplicationDbContext dbContext)
+        public DeleteModel(IUnitOfWork dbUnitOfWork)
         {
-            _dbContext = dbContext;
+            _unitOfWork = dbUnitOfWork;
         }
         public void OnGet(int id)
         {
-            FoodType = _dbContext.FoodTypes.FirstOrDefault(f => f.Id == id);
+            FoodType = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
         }
 
         public async Task<IActionResult> OnPost()
         {
 
-            var deleteFoodType = _dbContext.FoodTypes.Find(FoodType.Id);
+            var deleteFoodType = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == FoodType.Id);
             if (deleteFoodType != null)
             {
-                _dbContext.Remove(deleteFoodType);
-                await _dbContext.SaveChangesAsync();
+                _unitOfWork.FoodType.Remove(deleteFoodType);
+                _unitOfWork.Save();
                 TempData["success"] = "Deleted successfully";
                 return RedirectToPage("Index");
             }

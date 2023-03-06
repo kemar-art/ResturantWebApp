@@ -1,7 +1,8 @@
 ﻿using ResturantWebApp.DataAccess.Data;
-using ResturantWebApp.DataAccess.GenericRepository;
-using ResturantWebApp.DataAccess.GenericRepository.IRepository;
+using ResturantWebApp.DataAccess.Repository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
+using ResturantWebApp.DataAccess.Repository.IRepository;
+using ResturantWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,20 @@ namespace ResturantWebApp.DataAccess.Repository
         {
             _dbContext = dbContext;
             Category = new CategoryRepository(_dbContext);
+            FoodType = new FoodTypeRepository(_dbContext);
+            MenuItem = new MenuItemRepository(_dbContext);
         }
 
         public ICategoryRepository Category { get; private set; }
 
+        public IFoodTypeRepository FoodType { get; private set; }
+
+        public IMenuItemRepository MenuItem { get; private set; }
+
+
         public void Dispose()
         {
-            _dbContext.Dispose();
+            _dbContext.Dispose(); 
         }
 
         public void Save()

@@ -13,9 +13,9 @@ namespace ResturantWebApp.Pages.Admin.Categories
 
         public Category Category { get; set; }
 
-        public EditModel(IUnitOfWork unitOfWork)
+        public EditModel(IUnitOfWork dbUnitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = dbUnitOfWork;
         }
 
         public void OnGet(int id)

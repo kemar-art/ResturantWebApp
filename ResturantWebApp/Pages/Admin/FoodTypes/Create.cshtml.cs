@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Admin.FoodTypes
@@ -8,13 +9,13 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
     [BindProperties]
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
         public FoodType FoodType { get; set; }
 
-        public CreateModel(ApplicationDbContext dbContext)
+        public CreateModel(IUnitOfWork dbUnitOfWork)
         {
-            _dbContext = dbContext;
+            _unitOfWork = dbUnitOfWork;
         }
         public void OnGet()
         {
@@ -24,8 +25,8 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
         {
             if (ModelState.IsValid)
             {
-                await _dbContext.FoodTypes.AddAsync(FoodType);
-                await _dbContext.SaveChangesAsync();
+                _unitOfWork.FoodType.Add(FoodType);
+                _unitOfWork.Save();
                 TempData["success"] = "Create successfully";
                 return RedirectToPage("Index");
             }

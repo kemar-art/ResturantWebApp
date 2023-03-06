@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResturantWebApp.DataAccess.GenericRepository.IRepository
+namespace ResturantWebApp.DataAccess.Repository.IRepository
 {
     public interface IGenericRepository<T> where T : class
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ResturantWebApp.DataAccess.Data;
-using ResturantWebApp.DataAccess.GenericRepository.IRepository;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResturantWebApp.DataAccess.GenericRepository
+namespace ResturantWebApp.DataAccess.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ResturantWebApp.DataAccess.Data;
-using ResturantWebApp.DataAccess.GenericRepository;
-using ResturantWebApp.DataAccess.GenericRepository.IRepository;
+using ResturantWebApp.DataAccess.Repository;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.DataAccess.Repository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
 

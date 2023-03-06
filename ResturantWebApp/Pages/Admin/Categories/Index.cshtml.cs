@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
-using ResturantWebApp.DataAccess.GenericRepository.IRepository;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
@@ -13,9 +13,9 @@ namespace ResturantWebApp.Pages.Admin.Categories
 
         public IEnumerable<Category> Category { get; set; }
 
-        public IndexModel(IUnitOfWork unitOfWork)
+        public IndexModel(IUnitOfWork dbUnitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = dbUnitOfWork;
         }
         public void OnGet()
         {
