@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Admin.Categories
@@ -8,28 +9,28 @@ namespace ResturantWebApp.Pages.Admin.Categories
     [BindProperties]
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
         public Category Category { get; set; }
 
-        public DeleteModel(ApplicationDbContext dbContext)
+        public DeleteModel(IUnitOfWork unitOfWork)
         {
-            _dbContext = dbContext;
+            _unitOfWork = unitOfWork;
         }
 
         public void OnGet(int id)
         {
-            Category = _dbContext.Categories.FirstOrDefault(c => c.Id == id); ;
+            Category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id); ;
         }
 
         public async Task<IActionResult> OnPost()
         {
 
-                var deleteCategory = _dbContext.Categories.Find(Category.Id);
+                var deleteCategory = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == Category.Id);
                 if (deleteCategory != null) 
-                { 
-                    _dbContext.Remove(deleteCategory);
-                    await _dbContext.SaveChangesAsync();
+                {
+                    _unitOfWork.Category.Remove(deleteCategory);
+                    _unitOfWork.Save();
                     TempData["success"] = "Deleted successfully";
                     return RedirectToPage("Index");
                 }

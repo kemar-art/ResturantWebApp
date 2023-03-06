@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
+using ResturantWebApp.DataAccess.GenericRepository.IRepository;
+using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Admin.Categories
@@ -8,20 +10,20 @@ namespace ResturantWebApp.Pages.Admin.Categories
     [BindProperties]
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
         public Category Category { get; set; }
 
-        public CreateModel(ApplicationDbContext dbContext)
+        public CreateModel(IUnitOfWork unitOfWork)
         {
-            _dbContext = dbContext;
+            _unitOfWork = unitOfWork;
         }
 
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPost()
+        public async  Task<IActionResult> OnPost()
         {
             if (Category.Name == Category.DisplayOrder.ToString())
             {
@@ -29,8 +31,8 @@ namespace ResturantWebApp.Pages.Admin.Categories
             }
             if (ModelState.IsValid)
             {
-                await _dbContext.Categories.AddAsync(Category);
-                await _dbContext.SaveChangesAsync();
+                _unitOfWork.Category.Add(Category);
+                _unitOfWork.Save();
                 TempData["success"] = "Created successfully";
                 return RedirectToPage("Index");
             }
