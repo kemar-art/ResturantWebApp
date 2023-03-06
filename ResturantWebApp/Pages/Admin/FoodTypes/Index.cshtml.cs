@@ -1,23 +1,24 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
 using ResturantWebApp.Models;
 
-namespace ResturantWebApp.Pages.Categories
+namespace ResturantWebApp.Pages.Admin.FoodTypes
 {
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public IEnumerable<Category> Category { get; set; }
+        public IEnumerable<FoodType> FoodType { get; set; }
 
-        public IndexModel(ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext dbContext)
         {
-            _dbContext = context;
+            _dbContext = dbContext;
         }
         public void OnGet()
         {
-            Category = _dbContext.Categories;
+            FoodType = _dbContext.FoodTypes;
         }
     }
 }
