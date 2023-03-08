@@ -1,0 +1,93 @@
+﻿@page
+@model ResturantWebApp.Pages.Admin.MenuItems.UpsertModel
+
+<form method="post" enctype="multipart/form-data">
+    <input hidden asp-for="MenuItem.Id" />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <div class="col-9">
+                <h2 class=" pl-3">
+                    @(Model.MenuItem.Id != 0 ? "Update" : "Create") Menu Item
+                </h2>
+                <hr />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.Name"></label>
+                    <input asp-for="@Model.MenuItem.Name" class="form-control" />
+                    <span asp-validation-for="MenuItem.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.Description"></label>
+                    <textarea asp-for="@Model.MenuItem.Description" class="form-control"></textarea>
+                    <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.Price"></label>
+                    <input asp-for="@Model.MenuItem.Price" class="form-control" />
+                    <span asp-validation-for="MenuItem.Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.Image"></label>
+                    <input type="file" name="files" id="uploadBox" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.CategoryTypeId"></label>
+                    <select asp-for="MenuItem.CategoryTypeId" asp-items="Model.CategoryList" class="form-select">
+                        <option disabled selected>--Select Category--</option>
+                    </select>
+                    <span asp-validation-for="MenuItem.CategoryTypeId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="MenuItem.FoodTypeId"></label>
+                    <select asp-for="MenuItem.FoodTypeId" asp-items="Model.FoodTypeList" class="form-select">
+                        <option disabled selected>--Select Food Type--</option>
+                    </select>
+                    <span asp-validation-for="MenuItem.FoodTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-3">
+                @if (Model.MenuItem.Id != 0)
+                {
+                    <img src="@Model.MenuItem.Image" style="width: 100%; border-radius: 5px; border: 1px; solid: #bbb9b9" />
+                }
+            </div>
+        </div>
+        @if (Model.MenuItem.Id != 0)
+        {
+            <button type="submit" class="btn btn-info" style="width:153px;">Update</button>
+        }
+        else
+        {
+            <button type="submit" onclick="return ValidateImageField()" class="btn btn-info" style="width:153px;">Create</button>
+        }
+        &nbsp;&nbsp;
+        <a asp-page="Index" class="btn btn-primary" style="width:153px;">Back to List</a>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+
+        ValidateImageField = function () {
+            if (document.getElementById("uploadBox").value == "")
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload an image!',
+                })
+                return false;
+            }
+            return true;
+        }
+    </script>
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

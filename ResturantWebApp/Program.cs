@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using ResturantWebApp.DataAccess.Data;
 using ResturantWebApp.DataAccess.Repository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
-using ResturantWebApp.DataAccess.Repository;
-using ResturantWebApp.DataAccess.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,5 +33,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();

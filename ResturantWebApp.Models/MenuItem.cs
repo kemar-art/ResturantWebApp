@@ -19,10 +19,12 @@ namespace ResturantWebApp.Models
 
         [ForeignKey("FoodTypeId")]
         public FoodType FoodType { get; set; }
+        [Display(Name = "Food Type")]
         public int FoodTypeId { get; set; }
 
         [ForeignKey("CategoryTypeId")]
         public Category Category { get; set; }
+        [Display(Name = "Category")]
         public int CategoryTypeId { get; set; }
 
     }
