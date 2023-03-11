@@ -21,7 +21,7 @@ namespace ResturantWebApp.Pages.Customer.Home
         {
             MenuItemList = _unitOfWork.MenuItem.GetAll(includeProperties: "Category,FoodType");
 
-            CategoryList = _unitOfWork.Category.GetAll();
+            CategoryList = _unitOfWork.Category.GetAll(orderBy: o => o.OrderBy(o => o.DisplayOrder));
 
         }
     }

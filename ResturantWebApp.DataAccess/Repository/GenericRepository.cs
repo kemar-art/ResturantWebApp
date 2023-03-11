@@ -25,11 +25,18 @@ namespace ResturantWebApp.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            string ? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
-            if (includeProperties != null)
+			if (filter != null)
+			{
+				query = query.Where(filter);
+			}
+
+			if (includeProperties != null)
             {
                 foreach (var item in includeProperties.Split(
                     new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
@@ -37,18 +44,32 @@ namespace ResturantWebApp.DataAccess.Repository
                     query = query.Include(item);
                 }
             }
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
 
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>>? filter = null)
+        public T GetFirstOrDefault(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-            return query.FirstOrDefault();
+
+			if (includeProperties != null)
+			{
+				foreach (var item in includeProperties.Split(
+					new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+				{
+					query = query.Include(item);
+				}
+			}
+
+			return query.FirstOrDefault();
         }
 
         public void Remove(T entity)
