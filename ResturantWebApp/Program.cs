@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ResturantWebApp.DataAccess.Data;
 using ResturantWebApp.DataAccess.Repository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
          builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
