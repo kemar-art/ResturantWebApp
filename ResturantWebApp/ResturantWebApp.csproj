@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ResturantWebApp.DataAccess\ResturantWebApp.DataAccess.csproj" />
     <ProjectReference Include="..\ResturantWebApp.Models\ResturantWebApp.Models.csproj" />
+    <ProjectReference Include="..\ResturantWebApp.Utility\ResturantWebApp.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>

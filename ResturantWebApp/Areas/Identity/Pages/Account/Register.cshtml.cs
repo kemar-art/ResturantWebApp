@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ResturantWebApp.Models;
+using ResturantWebApp.Utility;
 
 namespace ResturantWebApp.Areas.Identity.Pages.Account
 {
@@ -29,13 +31,15 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +47,7 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -97,6 +102,9 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public  string PhoneNumber { get; set; }
         }
 
 
@@ -116,10 +124,48 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.PhoneNumber = Input.PhoneNumber;
 
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                // Checking if the role was already created if not then create the role
+                if (!await _roleManager.RoleExistsAsync(StaticDetail.ManagerRole))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.ManagerRole));
+                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.KitchenRole));
+                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.FrontDeskRole));
+                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.CustomerRole));
+                }
                 if (result.Succeeded)
                 {
+                    //Getting data fron the respective radio button that was selected.
+                    string role = Request.Form["UserRole"].ToString();
+
+                    //Adding user base on the radio button that was selected/
+                    // And if no radio button was selected then we will add a customer.
+                    if (role == StaticDetail.ManagerRole)
+                    {
+                        await _userManager.AddToRoleAsync(user, StaticDetail.ManagerRole);
+                    }
+                    else 
+                    { 
+                        if (role == StaticDetail.KitchenRole)
+                        {
+                            await _userManager.AddToRoleAsync(user, StaticDetail.KitchenRole);
+                        }
+                        else
+                        {
+                            if (role == StaticDetail.FrontDeskRole)
+                            {
+                                await _userManager.AddToRoleAsync(user, StaticDetail.FrontDeskRole);
+                            }
+                            else
+                            {
+                                await _userManager.AddToRoleAsync(user, StaticDetail.CustomerRole);
+                            }
+                        }
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -154,11 +200,11 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
+        private ApplicationUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<IdentityUser>();
+                return Activator.CreateInstance<ApplicationUser>();
             }
             catch
             {
