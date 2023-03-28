@@ -21,7 +21,8 @@ namespace ResturantWebApp.DataAccess.Repository
             Category = new CategoryRepository(_dbContext);
             FoodType = new FoodTypeRepository(_dbContext);
             MenuItem = new MenuItemRepository(_dbContext);
-        }
+			ShoppingCart = new ShoppingCartRepository(_dbContext);
+		}
 
         public ICategoryRepository Category { get; private set; }
 
@@ -29,8 +30,10 @@ namespace ResturantWebApp.DataAccess.Repository
 
         public IMenuItemRepository MenuItem { get; private set; }
 
+		public IShoppingCartRepository ShoppingCart { get; private set; }
 
-        public void Dispose()
+
+		public void Dispose()
         {
             _dbContext.Dispose(); 
         }

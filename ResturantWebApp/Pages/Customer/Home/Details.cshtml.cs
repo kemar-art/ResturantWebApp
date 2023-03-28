@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace ResturantWebApp.Pages.Customer.Home
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,14 +17,48 @@ namespace ResturantWebApp.Pages.Customer.Home
         {
             _unitOfWork = unitOfWork;
         }
+        [BindProperty]
+        public ShoppingCart ShoppingCart { get; set; }
 
-        public MenuItem MenuItem { get; set; }
-        [Range(1, 100, ErrorMessage = "Please select a count from 1 to 100")]
-        public int Count { get; set; }
 
         public void OnGet(int id)
         {
-            MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == id, includeProperties: "Category,FoodType");
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            
+
+            ShoppingCart = new ShoppingCart()
+            {
+                ApplicationUserId = claim.Value,
+                MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == id, includeProperties: "Category,FoodType"),
+                MenuItemId = id
+			};
+		}
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                ShoppingCart shoppingCartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(
+                filter: s => s.ApplicationUserId == ShoppingCart.ApplicationUserId &&
+                        s.MenuItemId == ShoppingCart.MenuItemId
+                 );
+
+                if (shoppingCartFromDb == null)
+                {
+                     _unitOfWork.ShoppingCart.Add(ShoppingCart);
+                     _unitOfWork.Save();
+                }
+                else
+                {
+                    _unitOfWork.ShoppingCart.IncrementCount(shoppingCartFromDb, ShoppingCart.Count);
+                }
+
+
+                return RedirectToAction("Index");
+            }
+            
+            return Page();
         }
     }
 }
