@@ -15,7 +15,6 @@ namespace ResturantWebApp.Models
 
 		
 		[ForeignKey("MenuItemId")]
-		[NotMapped]
 		[ValidateNever]
 		public MenuItem MenuItem { get; set; }
 		public int MenuItemId { get; set; }
@@ -25,7 +24,6 @@ namespace ResturantWebApp.Models
 
 		
 		[ForeignKey("ApplicationUserId")]
-        [NotMapped]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 		public string ApplicationUserId { get; set; }

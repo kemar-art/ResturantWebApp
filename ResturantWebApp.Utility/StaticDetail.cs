@@ -12,5 +12,7 @@ namespace ResturantWebApp.Utility
         public const string FrontDeskRole = "Server";
         public const string KitchenRole = "Kitchen";
         public const string CustomerRole = "Costomer";
+
+        public static string SessionCart { get; set; }
     }
 }

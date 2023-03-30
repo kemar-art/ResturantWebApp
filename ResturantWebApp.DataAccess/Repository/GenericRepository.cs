@@ -19,7 +19,10 @@ namespace ResturantWebApp.DataAccess.Repository
         {
             _dbContext = dbContext;
             this.dbSet = dbContext.Set<T>();
+            //_dbContext.ShoppingCarts.Include(u => u.MenuItem).ThenInclude(u => u.Category);
         }
+
+
         public void Add(T entity)
         {
             dbSet.Add(entity);

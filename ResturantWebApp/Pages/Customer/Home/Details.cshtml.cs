@@ -27,7 +27,7 @@ namespace ResturantWebApp.Pages.Customer.Home
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             
 
-            ShoppingCart = new ShoppingCart()
+            ShoppingCart = new()
             {
                 ApplicationUserId = claim.Value,
                 MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == id, includeProperties: "Category,FoodType"),
@@ -55,7 +55,7 @@ namespace ResturantWebApp.Pages.Customer.Home
                 }
 
 
-                return RedirectToAction("Index");
+                return RedirectToPage("Index");
             }
             
             return Page();
