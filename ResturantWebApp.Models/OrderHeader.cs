@@ -41,9 +41,11 @@ namespace ResturantWebApp.Models
 
         public string? Comments { get; set;}
 
-        public string? TransactionId { get; set; }
+        public string? SessionId { get; set; }
 
-        [Required]
+		public string? PaymentId { get; set; }
+
+		[Required]
         [Display(Name = "Pickup Name")]
         public string? PickupName { get; set;}
 

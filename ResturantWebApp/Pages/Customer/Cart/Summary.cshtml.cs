@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 using ResturantWebApp.Utility;
+using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace ResturantWebApp.Pages.Customer.Cart
@@ -43,7 +44,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
             }
         }
 
-		public void OnPost()
+		public IActionResult OnPost()
 		{
 			var claimsIdentity = User.Identity as ClaimsIdentity;
 			var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -69,21 +70,74 @@ namespace ResturantWebApp.Pages.Customer.Cart
 
                 foreach (var item in ShoppingCartList)
                 {
-                    OrderDetail orderDetail = new()
+#pragma warning disable CS8601 // Possible null reference assignment.
+					OrderDetail orderDetail = new()
                     {
                         MenuItemId = item.MenuItemId,
 						OrderHeaderId = OrderHeader.Id,
                         Name = item.MenuItem.Name,
                         Price = item.MenuItem.Price,
-                        Count = item.Count
+                        Count = item.Count,
+                        //Image = item.MenuItem.Image
 					};
+#pragma warning restore CS8601 // Possible null reference assignment.
 
-                    _unitOfWork.OrderDetails.Add(orderDetail);
+					_unitOfWork.OrderDetails.Add(orderDetail);
                 }
 
-                _unitOfWork.ShoppingCarts.RemoveRange(ShoppingCartList);
+				//_unitOfWork.ShoppingCarts.RemoveRange(ShoppingCartList);
                 _unitOfWork.Save();
-            }
+
+               
+				var domain = "https://localhost:44305/";
+				var options = new SessionCreateOptions
+				{
+					LineItems = new List<SessionLineItemOptions>(),
+                    PaymentMethodTypes = new List<string>
+				{
+				  "card",
+				},
+					Mode = "payment",
+					SuccessUrl = domain + $"Customer/Cart/OrderSuccess?id={OrderHeader.Id}",
+					CancelUrl = domain + "Customer/Cart/Index",
+				};
+
+                //Add line items
+                foreach (var item in ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.MenuItem.Price * 100),
+                            Currency = "jmd",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.MenuItem.Name,
+                                //Images = item.MenuItem.Image
+                            },
+                        },
+
+                        Quantity = item.Count
+                    };
+
+                    options.LineItems.Add(sessionLineItem);
+
+				}
+
+
+				var service = new SessionService();
+				Session session = service.Create(options);
+
+				Response.Headers.Add("Location", session.Url);
+                OrderHeader.SessionId = session.Id;
+                OrderHeader.PaymentId = session.PaymentIntentId;
+                _unitOfWork.Save();
+				return new StatusCodeResult(303);
+			}
+
+            return Page();
 		}
 	}
 }

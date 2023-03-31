@@ -1,5 +1,7 @@
 ﻿@page
+@using Microsoft.Extensions.Options;
 @model ResturantWebApp.Pages.Customer.Cart.SummaryModel
+@inject IOptions<ResturantWebApp.Utility.StripeSettings> Stripe
 @{
 }
 
@@ -8,7 +10,7 @@
 	<div class="backgroundWhiteBorder">
 		<div class="container">
 			<div class="card">
-				<div class="card-header bg-dark text-light ml-0 ">
+				<div class="card-header bg-dark text-white ml-0 ">
 					<div class="row">
 						<div class="col-6 pt-2">
 							<h3 class="text-white-50">Order Summary</h3>
@@ -111,7 +113,7 @@
 
 @section Scripts{
 	@{
-		<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+		<!--script-- src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script-->
 		<script src="https://js.stripe.com/v3/"></script>
 		<partial name="_ValidationScriptsPartial" />
 	}
