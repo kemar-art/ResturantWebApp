@@ -13,6 +13,9 @@ namespace ResturantWebApp.DataAccess.Repository.IRepository
         IFoodTypeRepository FoodType { get; }
         IMenuItemRepository MenuItem { get; }
 		IShoppingCartRepository ShoppingCart { get;}
+        IOrderDetailPepository OrderDetails { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IApplicationUserRepository ApplicationUser { get; }
 		void Save();
     }
 }

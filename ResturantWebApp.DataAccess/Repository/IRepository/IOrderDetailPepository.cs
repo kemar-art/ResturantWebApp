@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ResturantWebApp.DataAccess.Repository.IRepository
 {
-    public interface IApplicationUserRepository : IGenericRepository<ApplicationUser>
+    public interface IOrderDetailPepository : IGenericRepository<OrderDetail>
     {
-
+        void Update(OrderDetail orderDetail);
     }
 }

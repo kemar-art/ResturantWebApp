@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResturantWebApp.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using ResturantWebApp.DataAccess.Data;
 namespace ResturantWebApp.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230331003652_Add Order Header1 and Order Details Model")]
+    partial class AddOrderHeader1andOrderDetailsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,7 +317,7 @@ namespace ResturantWebApp.DataAccess.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("MenuItemId")
+                    b.Property<int>("MenuTtemId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -328,7 +331,7 @@ namespace ResturantWebApp.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuItemId");
+                    b.HasIndex("MenuTtemId");
 
                     b.HasIndex("OrderHeaderId");
 
@@ -356,14 +359,12 @@ namespace ResturantWebApp.DataAccess.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PickUpTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PickupName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TransactionId")
@@ -493,7 +494,7 @@ namespace ResturantWebApp.DataAccess.Migrations
                 {
                     b.HasOne("ResturantWebApp.Models.MenuItem", "MenuItem")
                         .WithMany()
-                        .HasForeignKey("MenuItemId")
+                        .HasForeignKey("MenuTtemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

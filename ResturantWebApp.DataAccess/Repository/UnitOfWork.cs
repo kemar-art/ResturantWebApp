@@ -1,7 +1,6 @@
 ﻿using ResturantWebApp.DataAccess.Data;
 using ResturantWebApp.DataAccess.Repository;
 using ResturantWebApp.DataAccess.Repository.IRepository;
-using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,10 @@ namespace ResturantWebApp.DataAccess.Repository
             FoodType = new FoodTypeRepository(_dbContext);
             MenuItem = new MenuItemRepository(_dbContext);
 			ShoppingCart = new ShoppingCartRepository(_dbContext);
-		}
+            OrderDetails = new OrderDetailPepository(_dbContext);
+            OrderHeader = new OrderHeaderRepository(_dbContext);
+            ApplicationUser = new ApplicationUserRepository(_dbContext);
+        }
 
         public ICategoryRepository Category { get; private set; }
 
@@ -32,8 +34,13 @@ namespace ResturantWebApp.DataAccess.Repository
 
 		public IShoppingCartRepository ShoppingCart { get; private set; }
 
+        public IOrderDetailPepository OrderDetails { get; private set; }
 
-		public void Dispose()
+        public IOrderHeaderRepository OrderHeader { get; private set; }
+
+        public IApplicationUserRepository ApplicationUser { get; private set; }
+
+        public void Dispose()
         {
             _dbContext.Dispose(); 
         }

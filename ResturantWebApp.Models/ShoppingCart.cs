@@ -16,7 +16,7 @@ namespace ResturantWebApp.Models
 		
 		[ForeignKey("MenuItemId")]
 		[ValidateNever]
-		public MenuItem MenuItem { get; set; }
+		public MenuItem? MenuItem { get; set; }
 		public int MenuItemId { get; set; }
 
 		[Range(1, 100, ErrorMessage = "Please select a count from 1 to 100")]
@@ -25,8 +25,8 @@ namespace ResturantWebApp.Models
 		
 		[ForeignKey("ApplicationUserId")]
         [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
-		public string ApplicationUserId { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
+		public string? ApplicationUserId { get; set; }
 
 	}
 }

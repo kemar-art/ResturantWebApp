@@ -32,8 +32,8 @@
 										<label>Name</label>
 									</div>
 									<div class="col-9">
-										<!--input asp-for="OrderHeader.PickupName" class="form-control" />
-										<span-- asp-validation-for="OrderHeader.PickupName" class="text-danger"></span-->
+										<input asp-for="OrderHeader.PickupName" required class="form-control" />
+										<span asp-validation-for="OrderHeader.PickupName" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -41,8 +41,8 @@
 										<label>Phone Number</label>
 									</div>
 									<div class="col-9">
-										<!--input asp-for="OrderHeader.PhoneNumber" class="form-control" />
-										<span-- asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span-->
+										<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+										<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -50,8 +50,8 @@
 										<label>Pickup Date</label>
 									</div>
 									<div class="col-9">
-										<!--input value="" asp-for="OrderHeader.PickUpDate" type="date" class="form-control" />
-										<span-- asp-validation-for="OrderHeader.PickUpDate" class="text-danger"></span-->
+										<input value="" asp-for="OrderHeader.PickUpDate" type="date" class="form-control" />
+										<span asp-validation-for="OrderHeader.PickUpDate" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -59,8 +59,8 @@
 										<label>Pickup Time</label>
 									</div>
 									<div class="col-9">
-										<!--input value="" asp-for="OrderHeader.PickUpTime" type="time" class="form-control" />
-										<span-- asp-validation-for="OrderHeader.PickUpTime" class="text-danger"></span-->
+										<input value="" asp-for="OrderHeader.PickUpTime" type="time"  class="form-control" />
+										<span asp-validation-for="OrderHeader.PickUpTime" class="text-danger"></span>
 									</div>
 								</div>
 								<div class="row my-1">
@@ -68,7 +68,7 @@
 										<label>Additional Instructions: </label>
 									</div>
 									<div class="col-9">
-										<!--textarea asp-for="OrderHeader.Comments" style="height:100px;" class="form-control"></!--textarea-->
+										<textarea asp-for="OrderHeader.Comments" style="height:100px;" class="form-control"></textarea>
 									</div>
 								</div>
 							</div>
@@ -77,8 +77,8 @@
 								<h4 class="d-flex justify-content-between align-items-center mb-3">
 									<span class="text-info">Order Summary:</span>
 								</h4>
-								<!--ul class="list-group mb-3">
-									@*foreach (var detail in Model.ShoppingCartList)
+								<ul class="list-group mb-3">
+									@foreach (var detail in Model.ShoppingCartList)
 									{
 										<li class="list-group-item d-flex justify-content-between">
 											<div>
@@ -91,8 +91,8 @@
 									<li class="list-group-item d-flex justify-content-between bg-light">
 										<small class="text-info">Total (USD)</small>
 										<strong class="text-info">$@Model.OrderHeader.OrderTotal.ToString("0.00")</strong>
-                                    </li>*@
-								</!--ul-->
+                                    </li>
+								</ul>
 							</div>
 						</div>
 					</div>
