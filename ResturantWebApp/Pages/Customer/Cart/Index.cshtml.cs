@@ -25,7 +25,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             if (claim != null)
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
+                ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(filter: u => u.ApplicationUserId == claim.Value,
                     includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
 
                 foreach (var cartItem in ShoppingCartList)
@@ -37,22 +37,22 @@ namespace ResturantWebApp.Pages.Customer.Cart
 
         public IActionResult OnPostPlus(int cartId)
         {
-            var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u  => u.Id == cartId);
-            _unitOfWork.ShoppingCart.IncrementCount(cart, 1);
+            var cart = _unitOfWork.ShoppingCarts.GetFirstOrDefault(u  => u.Id == cartId);
+            _unitOfWork.ShoppingCarts.IncrementCount(cart, 1);
             return RedirectToPage("/Customer/Cart/Index");
         }
 
         public IActionResult OnPostMinus(int cartId)
         {
-            var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
+            var cart = _unitOfWork.ShoppingCarts.GetFirstOrDefault(u => u.Id == cartId);
             if (cart.Count == 1)
             {
-                _unitOfWork.ShoppingCart.Remove(cart);
+                _unitOfWork.ShoppingCarts.Remove(cart);
                 _unitOfWork.Save();
             }
             else
             {
-                _unitOfWork.ShoppingCart.DecrementCount(cart, 1);
+                _unitOfWork.ShoppingCarts.DecrementCount(cart, 1);
             }
             
             return RedirectToPage("/Customer/Cart/Index");
@@ -60,8 +60,8 @@ namespace ResturantWebApp.Pages.Customer.Cart
 
         public IActionResult OnPostRemove(int cartId)
         {
-            var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
-            _unitOfWork.ShoppingCart.Remove(cart);
+            var cart = _unitOfWork.ShoppingCarts.GetFirstOrDefault(u => u.Id == cartId);
+            _unitOfWork.ShoppingCarts.Remove(cart);
             _unitOfWork.Save();
             return RedirectToPage("/Customer/Cart/Index");
         }

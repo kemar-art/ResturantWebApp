@@ -28,18 +28,18 @@ namespace ResturantWebApp.Pages.Admin.MenuItems
             //This codition statement is for the edit button on the Menu List Page
             if (id != null) 
             { 
-                MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(i => i.Id == id);
+                MenuItem = _unitOfWork.MenuItems.GetFirstOrDefault(i => i.Id == id);
             }
 
             //Populating Category list to create a dropdown menu
-            CategoryList = _unitOfWork.Category.GetAll().Select(c => new SelectListItem() 
+            CategoryList = _unitOfWork.Categories.GetAll().Select(c => new SelectListItem() 
             { 
                 Text = c.Name,
                 Value = c.Id.ToString()
             });
 
             //Populating Food Type list to create a dropdown menu
-            FoodTypeList = _unitOfWork.FoodType.GetAll().Select(c => new SelectListItem()
+            FoodTypeList = _unitOfWork.FoodTypes.GetAll().Select(c => new SelectListItem()
             {
                 Text = c.Name,
                 Value = c.Id.ToString()
@@ -63,13 +63,13 @@ namespace ResturantWebApp.Pages.Admin.MenuItems
                 }
 
                 MenuItem.Image = @"\images\menuitems\" + newFileName + extension;
-                _unitOfWork.MenuItem.Add(MenuItem);
+                _unitOfWork.MenuItems.Add(MenuItem);
                 _unitOfWork.Save();
             }
             else
             {
                 //Edit Menu Item
-                var menuItem = _unitOfWork.MenuItem.GetFirstOrDefault(i => i.Id == MenuItem.Id);
+                var menuItem = _unitOfWork.MenuItems.GetFirstOrDefault(i => i.Id == MenuItem.Id);
                 if (files.Count > 0)
                 {
                     string newFileName = Guid.NewGuid().ToString();
@@ -98,7 +98,7 @@ namespace ResturantWebApp.Pages.Admin.MenuItems
                     MenuItem.Image = menuItem.Image;
                 }
 
-                _unitOfWork.MenuItem.Update(MenuItem);
+                _unitOfWork.MenuItems.Update(MenuItem);
                 _unitOfWork.Save();
             }
 

@@ -25,7 +25,7 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.FoodType.Add(FoodType);
+                _unitOfWork.FoodTypes.Add(FoodType);
                 _unitOfWork.Save();
                 TempData["success"] = "Create successfully";
                 return RedirectToPage("Index");

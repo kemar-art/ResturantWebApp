@@ -9,13 +9,13 @@ namespace ResturantWebApp.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
-        ICategoryRepository Category { get; }
-        IFoodTypeRepository FoodType { get; }
-        IMenuItemRepository MenuItem { get; }
-		IShoppingCartRepository ShoppingCart { get;}
+        ICategoryRepository Categories { get; }
+        IFoodTypeRepository FoodTypes { get; }
+        IMenuItemRepository MenuItems { get; }
+		IShoppingCartRepository ShoppingCarts { get;}
         IOrderDetailPepository OrderDetails { get; }
-        IOrderHeaderRepository OrderHeader { get; }
-        IApplicationUserRepository ApplicationUser { get; }
+        IOrderHeaderRepository OrderHeaders { get; }
+        IApplicationUserRepository ApplicationUsers { get; }
 		void Save();
     }
 }

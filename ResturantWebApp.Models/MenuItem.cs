@@ -12,18 +12,18 @@ namespace ResturantWebApp.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? Image { get; set; }
         public double Price { get; set; }
 
         [ForeignKey("FoodTypeId")]
-        public FoodType FoodType { get; set; }
+        public FoodType? FoodType { get; set; }
         [Display(Name = "Food Type")]
         public int FoodTypeId { get; set; }
 
         [ForeignKey("CategoryTypeId")]
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         [Display(Name = "Category")]
         public int CategoryTypeId { get; set; }
 

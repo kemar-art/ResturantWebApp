@@ -20,16 +20,16 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
         }
         public void OnGet(int id)
         {
-            FoodType = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
+            FoodType = _unitOfWork.FoodTypes.GetFirstOrDefault(f => f.Id == id);
         }
 
         public async Task<IActionResult> OnPost()
         {
 
-            var deleteFoodType = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == FoodType.Id);
+            var deleteFoodType = _unitOfWork.FoodTypes.GetFirstOrDefault(f => f.Id == FoodType.Id);
             if (deleteFoodType != null)
             {
-                _unitOfWork.FoodType.Remove(deleteFoodType);
+                _unitOfWork.FoodTypes.Remove(deleteFoodType);
                 _unitOfWork.Save();
                 TempData["success"] = "Deleted successfully";
                 return RedirectToPage("Index");

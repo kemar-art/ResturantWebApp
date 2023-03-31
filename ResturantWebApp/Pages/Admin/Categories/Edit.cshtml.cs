@@ -20,7 +20,7 @@ namespace ResturantWebApp.Pages.Admin.Categories
 
         public void OnGet(int id)
         {
-            Category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
+            Category = _unitOfWork.Categories.GetFirstOrDefault(c => c.Id == id);
         }
 
         public async Task<IActionResult> OnPost()
@@ -31,7 +31,7 @@ namespace ResturantWebApp.Pages.Admin.Categories
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(Category);
+                _unitOfWork.Categories.Update(Category);
                 _unitOfWork.Save();
                 TempData["success"] = "Updataed successfully";
                 return RedirectToPage("Index");

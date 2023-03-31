@@ -19,9 +19,9 @@ namespace ResturantWebApp.Pages.Customer.Home
 
 		public void OnGet()
         {
-            MenuItemList = _unitOfWork.MenuItem.GetAll(includeProperties: "Category,FoodType");
+            MenuItemList = _unitOfWork.MenuItems.GetAll(includeProperties: "Category,FoodType");
                                                        // Which category you want to display first
-            CategoryList = _unitOfWork.Category.GetAll(orderBy: o => o.OrderBy(o => o.DisplayOrder));
+            CategoryList = _unitOfWork.Categories.GetAll(orderBy: o => o.OrderBy(o => o.DisplayOrder));
 
         }
     }

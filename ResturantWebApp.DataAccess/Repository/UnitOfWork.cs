@@ -17,28 +17,28 @@ namespace ResturantWebApp.DataAccess.Repository
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            Category = new CategoryRepository(_dbContext);
-            FoodType = new FoodTypeRepository(_dbContext);
-            MenuItem = new MenuItemRepository(_dbContext);
-			ShoppingCart = new ShoppingCartRepository(_dbContext);
+			Categories = new CategoryRepository(_dbContext);
+            FoodTypes = new FoodTypeRepository(_dbContext);
+            MenuItems = new MenuItemRepository(_dbContext);
+			ShoppingCarts = new ShoppingCartRepository(_dbContext);
             OrderDetails = new OrderDetailPepository(_dbContext);
-            OrderHeader = new OrderHeaderRepository(_dbContext);
-            ApplicationUser = new ApplicationUserRepository(_dbContext);
+            OrderHeaders = new OrderHeaderRepository(_dbContext);
+            ApplicationUsers = new ApplicationUserRepository(_dbContext);
         }
 
-        public ICategoryRepository Category { get; private set; }
+        public ICategoryRepository Categories { get; private set; }
 
-        public IFoodTypeRepository FoodType { get; private set; }
+        public IFoodTypeRepository FoodTypes { get; private set; }
 
-        public IMenuItemRepository MenuItem { get; private set; }
+        public IMenuItemRepository MenuItems { get; private set; }
 
-		public IShoppingCartRepository ShoppingCart { get; private set; }
+		public IShoppingCartRepository ShoppingCarts { get; private set; }
 
         public IOrderDetailPepository OrderDetails { get; private set; }
 
-        public IOrderHeaderRepository OrderHeader { get; private set; }
+        public IOrderHeaderRepository OrderHeaders { get; private set; }
 
-        public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IApplicationUserRepository ApplicationUsers { get; private set; }
 
         public void Dispose()
         {

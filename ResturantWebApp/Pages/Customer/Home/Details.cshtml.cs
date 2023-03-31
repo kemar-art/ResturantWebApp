@@ -30,7 +30,7 @@ namespace ResturantWebApp.Pages.Customer.Home
             ShoppingCart = new()
             {
                 ApplicationUserId = claim.Value,
-                MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(m => m.Id == id, includeProperties: "Category,FoodType"),
+                MenuItem = _unitOfWork.MenuItems.GetFirstOrDefault(m => m.Id == id, includeProperties: "Category,FoodType"),
                 MenuItemId = id
 			};
 		}
@@ -39,19 +39,19 @@ namespace ResturantWebApp.Pages.Customer.Home
         {
             if (ModelState.IsValid)
             {
-                ShoppingCart shoppingCartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(
+                ShoppingCart shoppingCartFromDb = _unitOfWork.ShoppingCarts.GetFirstOrDefault(
                 filter: s => s.ApplicationUserId == ShoppingCart.ApplicationUserId &&
                         s.MenuItemId == ShoppingCart.MenuItemId
                  );
 
                 if (shoppingCartFromDb == null)
                 {
-                     _unitOfWork.ShoppingCart.Add(ShoppingCart);
+                     _unitOfWork.ShoppingCarts.Add(ShoppingCart);
                      _unitOfWork.Save();
                 }
                 else
                 {
-                    _unitOfWork.ShoppingCart.IncrementCount(shoppingCartFromDb, ShoppingCart.Count);
+                    _unitOfWork.ShoppingCarts.IncrementCount(shoppingCartFromDb, ShoppingCart.Count);
                 }
 
 

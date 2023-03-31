@@ -19,14 +19,14 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
         }
         public void OnGet(int id)
         {
-            FoodType = _unitOfWork.FoodType.GetFirstOrDefault(f => f.Id == id);
+            FoodType = _unitOfWork.FoodTypes.GetFirstOrDefault(f => f.Id == id);
         }
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.FoodType.Update(FoodType);
+                _unitOfWork.FoodTypes.Update(FoodType);
                 _unitOfWork.Save();
                 TempData["success"] = "Updataed successfully";
                 return RedirectToPage("Index");

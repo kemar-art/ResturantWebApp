@@ -31,7 +31,7 @@ namespace ResturantWebApp.Pages.Admin.Categories
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(Category);
+                _unitOfWork.Categories.Add(Category);
                 _unitOfWork.Save();
                 TempData["success"] = "Created successfully";
                 return RedirectToPage("Index");

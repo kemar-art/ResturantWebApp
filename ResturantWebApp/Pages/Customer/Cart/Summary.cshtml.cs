@@ -28,7 +28,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             if (claim != null)
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
+                ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(filter: u => u.ApplicationUserId == claim.Value,
                     includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
 
                 foreach (var cartItem in ShoppingCartList)
@@ -36,7 +36,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
                     OrderHeader.OrderTotal += (cartItem.MenuItem.Price * cartItem.Count);
                 }
 
-                ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == claim.Value);
+                ApplicationUser applicationUser = _unitOfWork.ApplicationUsers.GetFirstOrDefault(u => u.Id == claim.Value);
                 OrderHeader.PickupName = applicationUser.FirstName + " " + applicationUser.LastName;
                 OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
 
@@ -49,7 +49,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
 			var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 			if (claim != null)
 			{
-				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
+				ShoppingCartList = _unitOfWork.ShoppingCarts.GetAll(filter: u => u.ApplicationUserId == claim.Value,
 					includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
 
 				foreach (var cartItem in ShoppingCartList)
@@ -64,7 +64,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
                 // In the OrderHeader Model
                 OrderHeader.PickUpTime = Convert.ToDateTime(OrderHeader.PickUpDate.ToShortDateString() + " " +
                     OrderHeader.PickUpTime.ToShortTimeString());
-                _unitOfWork.OrderHeader.Add(OrderHeader);
+                _unitOfWork.OrderHeaders.Add(OrderHeader);
                 _unitOfWork.Save();
 
                 foreach (var item in ShoppingCartList)
@@ -79,10 +79,9 @@ namespace ResturantWebApp.Pages.Customer.Cart
 					};
 
                     _unitOfWork.OrderDetails.Add(orderDetail);
-                    _unitOfWork.Save();
                 }
 
-                _unitOfWork.ShoppingCart.RemoveRange(ShoppingCartList);
+                _unitOfWork.ShoppingCarts.RemoveRange(ShoppingCartList);
                 _unitOfWork.Save();
             }
 		}

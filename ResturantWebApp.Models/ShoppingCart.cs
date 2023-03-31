@@ -11,16 +11,16 @@ namespace ResturantWebApp.Models
 {
 	public class ShoppingCart
 	{
-        public int Id { get; set; }
+		public int Id { get; set; }
 
-		
+
 		[ForeignKey("MenuItemId")]
 		[ValidateNever]
 		public MenuItem? MenuItem { get; set; }
 		public int MenuItemId { get; set; }
 
-		[Range(1, 100, ErrorMessage = "Please select a count from 1 to 100")]
-		public int Count { get; set; }
+		[Display(Name = "Qty")]
+		public int Count { get; set; } = 1;
 
 		
 		[ForeignKey("ApplicationUserId")]

@@ -20,16 +20,16 @@ namespace ResturantWebApp.Pages.Admin.Categories
 
         public void OnGet(int id)
         {
-            Category = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id); ;
+            Category = _unitOfWork.Categories.GetFirstOrDefault(c => c.Id == id); ;
         }
 
         public async Task<IActionResult> OnPost()
         {
 
-                var deleteCategory = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == Category.Id);
+                var deleteCategory = _unitOfWork.Categories.GetFirstOrDefault(c => c.Id == Category.Id);
                 if (deleteCategory != null) 
                 {
-                    _unitOfWork.Category.Remove(deleteCategory);
+                    _unitOfWork.Categories.Remove(deleteCategory);
                     _unitOfWork.Save();
                     TempData["success"] = "Deleted successfully";
                     return RedirectToPage("Index");

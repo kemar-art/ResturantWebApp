@@ -19,7 +19,7 @@ namespace ResturantWebApp.Pages.Admin.FoodTypes
         }
         public void OnGet()
         {
-            FoodType = _unitOfWork.FoodType.GetAll();
+            FoodType = _unitOfWork.FoodTypes.GetAll();
         }
     }
 }

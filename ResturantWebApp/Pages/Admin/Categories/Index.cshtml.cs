@@ -19,7 +19,7 @@ namespace ResturantWebApp.Pages.Admin.Categories
         }
         public void OnGet()
         {
-            Category = _unitOfWork.Category.GetAll();
+            Category = _unitOfWork.Categories.GetAll();
         }
     }
 }
