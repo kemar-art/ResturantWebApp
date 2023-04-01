@@ -70,7 +70,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
 
                 foreach (var item in ShoppingCartList)
                 {
-#pragma warning disable CS8601 // Possible null reference assignment.
+
 					OrderDetail orderDetail = new()
                     {
                         MenuItemId = item.MenuItemId,
@@ -80,7 +80,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
                         Count = item.Count,
                         //Image = item.MenuItem.Image
 					};
-#pragma warning restore CS8601 // Possible null reference assignment.
+
 
 					_unitOfWork.OrderDetails.Add(orderDetail);
                 }
@@ -114,7 +114,7 @@ namespace ResturantWebApp.Pages.Customer.Cart
                             Currency = "jmd",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name = item.MenuItem.Name,
+                                Name = item.MenuItem.Name
                                 //Images = item.MenuItem.Image
                             },
                         },
