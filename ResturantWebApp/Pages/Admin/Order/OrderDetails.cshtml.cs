@@ -32,7 +32,6 @@ namespace ResturantWebApp.Pages.Admin.Order
         {
             _unitOfWork.OrderHeaders.updateStatus(orderId, StaticDetail.StatusCompleted);
             _unitOfWork.Save();
-
             return RedirectToPage("OrderList");
 
         }
@@ -51,7 +50,6 @@ namespace ResturantWebApp.Pages.Admin.Order
 
             _unitOfWork.OrderHeaders.updateStatus(orderId, StaticDetail.StatusRefunded);
             _unitOfWork.Save();
-
             return RedirectToPage("OrderList");
 
         }
@@ -60,7 +58,6 @@ namespace ResturantWebApp.Pages.Admin.Order
         {
             _unitOfWork.OrderHeaders.updateStatus(orderId, StaticDetail.StatusCancelled);
             _unitOfWork.Save();
-
             return RedirectToPage("OrderList");
 
         }
