@@ -11,5 +11,7 @@ namespace ResturantWebApp.DataAccess.Repository.IRepository
     public interface IOrderHeaderRepository : IGenericRepository<OrderHeader>
     {
         void Update(OrderHeader orderHeader);
+
+        void updateStatus(int orderId, string orderstatus);
     }
 }

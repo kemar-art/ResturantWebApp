@@ -14,11 +14,12 @@ namespace ResturantWebApp.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        
         [ForeignKey("UserId")]
         [ValidateNever]
         public ApplicationUser? ApplicationUser { get; set; }
-        public string? UserId { get; set; }
+		[Required]
+		public string? UserId { get; set; }
 
         [Required]
         public DateTime OrderDate { get; set; }
@@ -43,7 +44,7 @@ namespace ResturantWebApp.Models
 
         public string? SessionId { get; set; }
 
-		public string? PaymentId { get; set; }
+		public string? PaymentIntentId { get; set; }
 
 		[Required]
         [Display(Name = "Pickup Name")]

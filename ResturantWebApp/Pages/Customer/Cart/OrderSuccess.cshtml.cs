@@ -27,7 +27,8 @@ namespace ResturantWebApp.Pages.Customer.Cart
                 if (session.PaymentStatus.ToLower() == "paid")
                 {
                     orderHeader.OrderStatus = StaticDetail.StatusSubmitted;
-                    _unitOfWork.Save();
+					orderHeader.PaymentIntentId = session.PaymentIntentId;
+					_unitOfWork.Save();
                 }
             }
 

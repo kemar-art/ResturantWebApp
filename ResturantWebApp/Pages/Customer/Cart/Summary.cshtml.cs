@@ -132,7 +132,6 @@ namespace ResturantWebApp.Pages.Customer.Cart
 
 				Response.Headers.Add("Location", session.Url);
                 OrderHeader.SessionId = session.Id;
-                OrderHeader.PaymentId = session.PaymentIntentId;
                 _unitOfWork.Save();
 				return new StatusCodeResult(303);
 			}

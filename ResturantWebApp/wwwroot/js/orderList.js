@@ -1,9 +1,30 @@
 //The variable was created to reload the data table
 let dataTable;
 $(document).ready(function () {
-   dataTable = $('#orderListData').DataTable({
+    let url = window.location.search;
+    if (url.includes("cancelled")) {
+        loadList("cancelled");
+    }
+    else {
+        if (url.includes("completed")) {
+            loadList("completed");
+        }
+        else {
+            if (url.includes("ready")) {
+                loadList("ready");
+            }
+            else {
+                loadList("inprocess");
+            }
+        }
+    }
+});
+
+
+function loadList(param) {
+    dataTable = $('#orderListData').DataTable({
         "ajax": {
-           "url": "/api/Order",
+            "url": "/api/order?status=" + param,
             "type": "GET",
             "datatype": "json"
         },
@@ -18,7 +39,7 @@ $(document).ready(function () {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="w75 btn-group">
-                                <a href="/Admin/Order/OrderDetails?id${data}" class="btn btn-warning mx-2">
+                                <a href="/Admin/Order/OrderDetails?id=${data}" class="btn btn-warning mx-2">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                            </div>`
@@ -26,39 +47,8 @@ $(document).ready(function () {
 
                 "width": "10%"
             }
-            
+
         ],
         "width": "100%"
     });
-});
-
-
-Delete = function (url) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#228B22',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    success: function (data) {
-                        if (data.success) {
-                            dataTable.ajax.reload();
-                            // success notification
-                            toastr.success(data.message);
-                        }
-                        else {
-                            // failure notification
-                            toastr.success(data.message);
-                        }
-                    }
-                })
-        }
-    })
 }

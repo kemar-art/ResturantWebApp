@@ -14,13 +14,12 @@ namespace ResturantWebApp.Models
         public int Id { get; set; }
 
         [ForeignKey("OrderHeaderId")]
-        [ValidateNever]
-        public OrderHeader? OrderHeader { get; set; }
+        public OrderHeader OrderHeader { get; set; }
         [Required]
         public int OrderHeaderId { get; set; }
 
         [ForeignKey("MenuItemId")]
-        public virtual MenuItem? MenuItem { get; set; }
+        public virtual MenuItem MenuItem { get; set; }
         [Required]
         public int MenuItemId { get; set; }
 

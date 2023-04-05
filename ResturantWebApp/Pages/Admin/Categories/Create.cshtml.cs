@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ResturantWebApp.DataAccess.Data;
 using ResturantWebApp.DataAccess.Repository.IRepository;
-using ResturantWebApp.DataAccess.Repository.IRepository;
 using ResturantWebApp.Models;
 
 namespace ResturantWebApp.Pages.Admin.Categories

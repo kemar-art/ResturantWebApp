@@ -22,5 +22,14 @@ namespace ResturantWebApp.DataAccess.Repository
         {
             _dbContext.OrderHeaders.Update(orderHeader);
         }
+
+        public void updateStatus(int orderId, string orderstatus)
+        {
+            var orderFromDb = _dbContext.OrderHeaders.FirstOrDefault(x => x.Id == orderId);
+            if (orderFromDb != null)
+            {
+                orderFromDb.OrderStatus = orderstatus;
+            }
+        }
     }
 }
