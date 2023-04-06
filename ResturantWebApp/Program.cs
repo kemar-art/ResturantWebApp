@@ -32,8 +32,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
-
-
+//Creating session for items in cart
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(100);
@@ -41,12 +41,10 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
+builder.Services.AddAuthentication().AddFacebook(optios =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(100);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
+    optios.AppId = "1951341088540504";
+    optios.AppSecret = "48fb2cf74b04710b50b4d0f521d1cd48";
 });
 
 var app = builder.Build();
