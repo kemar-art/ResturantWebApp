@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ResturantWebApp.Utility;
 using Stripe;
+using ResturantWebApp.DataAccess.SeedUSerRoles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(/*options => options.Si
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 
-
+builder.Services.AddScoped<IDbSeedUSerRoles, DbSeedUSerRoles>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -41,11 +42,31 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddAuthentication().AddFacebook(optios =>
+builder.Services.AddAuthentication().AddFacebook(options =>
 {
-    optios.AppId = "1951341088540504";
-    optios.AppSecret = "48fb2cf74b04710b50b4d0f521d1cd48";
-});
+    options.AppId = "1951341088540504";
+    options.AppSecret = "48fb2cf74b04710b50b4d0f521d1cd48";
+})
+.AddTwitter(options =>
+{
+    options.ConsumerKey = "ESvq1jJoSzqLK5siGU31VS5PU";
+    options.ConsumerSecret = "OeP49FPDksXjQA8rfyBYRvcp4fsc4HRJ0j9uHwhI2E0ZelXxmV";
+
+})
+.AddLinkedIn(options =>
+{
+    options.ClientId = "78c44ti1x0agit";
+    options.ClientSecret = "7rK8QGf5A6qDICqc";
+
+})
+.AddGoogle(options =>
+ {
+     options.ClientId = "78c44ti1x0agit";
+     options.ClientSecret = "7rK8QGf5A6qDICqc";
+
+ });
+
+
 
 var app = builder.Build();
 
@@ -61,8 +82,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-string key = builder.Configuration.GetSection("Stripe:Secretkey").Get<string>();
+SeedDatabase();
+string? key = builder.Configuration.GetSection("Stripe:Secretkey").Get<string>();
 StripeConfiguration.ApiKey = key;
 
 app.UseAuthorization();
@@ -70,3 +91,12 @@ app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
 app.Run();
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbSeedUSerRoles = scope.ServiceProvider.GetRequiredService<IDbSeedUSerRoles>();
+        dbSeedUSerRoles.Initialize();
+    }
+}

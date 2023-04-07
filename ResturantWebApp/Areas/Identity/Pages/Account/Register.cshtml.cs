@@ -102,8 +102,14 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
+            [Required]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
+            [Required]
+            [Display(Name = "Phone Number")]
             public  string PhoneNumber { get; set; }
         }
 
@@ -129,14 +135,7 @@ namespace ResturantWebApp.Areas.Identity.Pages.Account
                 user.PhoneNumber = Input.PhoneNumber;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                // Checking if the role was already created if not then create the role
-                if (!await _roleManager.RoleExistsAsync(StaticDetail.ManagerRole))
-                {
-                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.ManagerRole));
-                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.KitchenRole));
-                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.FrontDeskRole));
-                    await _roleManager.CreateAsync(new IdentityRole(StaticDetail.CustomerRole));
-                }
+              
                 if (result.Succeeded)
                 {
                     //Getting data fron the respective radio button that was selected.

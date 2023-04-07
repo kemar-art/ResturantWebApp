@@ -9,7 +9,7 @@ namespace ResturantWebApp.Utility
     public static class StaticDetail
     {
         public const string ManagerRole = "Manager";
-        public const string FrontDeskRole = "Server";
+        public const string FrontDeskRole = "Front Desk";
         public const string KitchenRole = "Kitchen";
         public const string CustomerRole = "Costomer";
 
