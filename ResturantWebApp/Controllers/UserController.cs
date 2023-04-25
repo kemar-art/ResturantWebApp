@@ -33,21 +33,17 @@ namespace ResturantWebApp.Controllers
             {
                 return Json(new { success = false, message = "Error while locking/Unlcoking" });
             }
+            // Lock user 
+            if (userFromDb.LockoutEnd != null && userFromDb.LockoutEnd > DateTime.Now)
+            {
+                userFromDb.LockoutEnd = DateTime.Now;
+            }
+            // unlock user
             else
             {
-                // Lock user 
-                if (userFromDb.LockoutEnd != null && userFromDb.LockoutEnd > DateTime.Now)
-                {
-                    userFromDb.LockoutEnd = DateTime.Now.AddYears(50);
-                    
-
-                }
-                // unlock user
-                else
-                {
-                    userFromDb.LockoutEnd = DateTime.Now;
-                }
+                userFromDb.LockoutEnd = DateTime.Now.AddYears(50);
             }
+
             _unitOfWork.Save();
 
             return Json(new { success = true, message = "Operation Successful." });

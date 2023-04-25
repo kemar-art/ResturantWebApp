@@ -21,7 +21,7 @@ namespace ResturantWebApp.Utility
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var emailToSend = new MimeMessage();
-            emailToSend.From.Add(MailboxAddress.Parse("hellow@resturantapp.com"));
+            emailToSend.From.Add(MailboxAddress.Parse("kemarnorton@yahoo.com"));
             emailToSend.To.Add(MailboxAddress.Parse(email));
             emailToSend.Subject = subject;
             emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage };
@@ -30,14 +30,17 @@ namespace ResturantWebApp.Utility
             // Sending the email
             using (var emailClient = new SmtpClient())
             {
-                emailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                //emailClient.Authenticate("", "");
+                emailClient.Connect("smtp.mail.yahoo.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                emailClient.Authenticate("kemarnorton@yahoo.com", "pnaajtefmwznflps");
                 emailClient.Send(emailToSend);
                 emailClient.Disconnect(true);
             }
 
             return Task.CompletedTask;
 
+
+            //resturantapp
+            //GodJesus7$
 
             // There is send grid packadge that is needed to use SendGridClient
             /* var client = new SendGridClient(SendGridSecret);

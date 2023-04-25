@@ -14,25 +14,25 @@ $(document).ready(function () {
             { "data": "email", "width": "15%" },
             { "data": "phoneNumber", "width": "15%" },
             {
-                "data": { id: "id", LockoutEnd: "LockoutEnd" },
+                "data": { id: "id", lockoutEnd: "lockoutEnd" },
                 "render": function (data) {
                     let today = new Date().getTime();
-                    let lockout = new Date(data.LockoutEnd).getTime();
+                    let lockout = new Date(data.lockoutEnd).getTime();
 
                     if (lockout > today) {
                         return `<div class="text-center">
                                 <a class="btn btn-success " style="cursor:pointer;" onclick=LockUnlock("${data.id}")>
-                                    <i class="fa-solid fa-lock-open"></i> unlcok
+                                    <i class="fa-solid fa-lock-open"></i> 
                                 </a></div>`;
                     }
                     else {
                         return `<div class="text-center">
                                 <a class="btn btn-danger " style="cursor:pointer;" onclick=LockUnlock("${data.id}")>
-                                    <i class="fa-solid fa-lock"></i> lock
+                                    <i class="fa-solid fa-lock fa-bounce"></i> 
                                 </a></div>`;
                     }
                    
-                }, "width": "13%"
+                }, "width": "10%"
 
             }
             
@@ -42,7 +42,7 @@ $(document).ready(function () {
 });
 
 
-function LockUnlock(id) {
+LockUnlock = function (id) {
     
     $.ajax({
         type: "POST",
